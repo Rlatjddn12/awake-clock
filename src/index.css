@@ -1,0 +1,97 @@
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  color-scheme: light;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: #ffffff;
+  color: #000000;
+}
+
+body {
+  font-family: ui-monospace, 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+}
+
+#root {
+  min-height: 100svh;
+}
+
+.app {
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+}
+
+.inputs {
+  display: flex;
+  border-bottom: 1px solid #000000;
+}
+
+.input-row {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 16px 8px;
+}
+
+.input-row:first-child {
+  border-right: 1px solid #000000;
+}
+
+.input-row span {
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.input-row input[type='time'] {
+  font-family: inherit;
+  font-size: 16px;
+  background: #ffffff;
+  color: #000000;
+  border: 1px solid #000000;
+  padding: 4px 8px;
+}
+
+.display {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  text-align: center;
+  padding: 24px;
+}
+
+.label {
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+.countdown {
+  font-size: clamp(48px, 14vw, 128px);
+  font-weight: 700;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.progress {
+  height: 8px;
+  border-top: 1px solid #000000;
+  background: #ffffff;
+}
+
+.progress-fill {
+  height: 100%;
+  background: #000000;
+}
