@@ -1,16 +1,21 @@
-# React + Vite
+# Awake Clock
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+오늘 남은 깨어있는 시간을 보여주는 개인용 시계 PWA.
 
-Currently, two official plugins are available:
+Live: https://rlatjddn12.github.io/awake-clock/
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Develop
 
-## React Compiler
+```
+npm install
+npm run dev
+```
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Deploy
 
-## Expanding the Oxlint configuration
+`main`(Actions)이 아닌 `gh-pages` 브랜치를 GitHub Pages 소스로 사용합니다.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+```
+npm run build
+# dist/ 내용을 gh-pages 브랜치 루트로 push
+```
