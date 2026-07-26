@@ -2,53 +2,33 @@ import { useEffect, useRef, useState } from 'react'
 
 const FLIP_MS = 300
 
-function useDigitFlips(digits) {
-  const prevRef = useRef(digits)
-  const timeoutsRef = useRef([])
-  const [flips, setFlips] = useState(() => digits.map(() => null))
+function FlipCard({ digit }) {
+  const [displayDigit, setDisplayDigit] = useState(digit)
+  const [flapDigit, setFlapDigit] = useState(null)
+  const prevRef = useRef(digit)
+  const timerRef = useRef(null)
 
   useEffect(() => {
-    const prev = prevRef.current
-    const changed = []
-    digits.forEach((d, i) => {
-      if (d !== prev[i]) changed.push(i)
-    })
+    if (digit === prevRef.current) return
+    const old = prevRef.current
+    prevRef.current = digit
 
-    if (changed.length) {
-      setFlips((current) => {
-        const next = [...current]
-        changed.forEach((i) => {
-          next[i] = prev[i]
-        })
-        return next
-      })
-      changed.forEach((i) => {
-        clearTimeout(timeoutsRef.current[i])
-        timeoutsRef.current[i] = setTimeout(() => {
-          setFlips((current) => {
-            const next = [...current]
-            next[i] = null
-            return next
-          })
-        }, FLIP_MS)
-      })
-    }
+    clearTimeout(timerRef.current)
+    setFlapDigit(old)
+    timerRef.current = setTimeout(() => {
+      setDisplayDigit(digit)
+      setFlapDigit(null)
+    }, FLIP_MS)
+  }, [digit])
 
-    prevRef.current = digits
-  }, [digits.join('')])
-
-  return flips
-}
-
-function FlipCard({ digit, prevDigit }) {
-  const flipping = prevDigit !== null && prevDigit !== undefined
+  useEffect(() => () => clearTimeout(timerRef.current), [])
 
   return (
     <div className="flip-card">
-      <div className="flip-card-digit">{digit}</div>
-      {flipping && (
-        <div className="flip-flap" key={`${prevDigit}-${digit}`}>
-          <div className="flip-flap-digit">{prevDigit}</div>
+      <div className="flip-card-digit">{displayDigit}</div>
+      {flapDigit !== null && (
+        <div className="flip-flap" key={flapDigit}>
+          <div className="flip-flap-digit">{flapDigit}</div>
         </div>
       )}
       <div className="flip-card-crease" />
@@ -58,12 +38,11 @@ function FlipCard({ digit, prevDigit }) {
 
 export default function FlipClock({ hms }) {
   const digits = hms.split('')
-  const flips = useDigitFlips(digits)
 
   const group = (start, end) => (
     <div className="flip-group">
       {digits.slice(start, end).map((d, i) => (
-        <FlipCard key={start + i} digit={d} prevDigit={flips[start + i]} />
+        <FlipCard key={start + i} digit={d} />
       ))}
     </div>
   )

@@ -89,8 +89,6 @@ export default function App() {
         </div>
       </div>
 
-      <div className="filler" />
-
       <div className="controls">
         <div className="pill">
           <input
