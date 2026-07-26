@@ -15,7 +15,8 @@ body {
 }
 
 body {
-  font-family: Helvetica, Arial, sans-serif;
+  font-family: 'Archivo', Helvetica, Arial, sans-serif;
+  font-weight: 500;
 }
 
 #root {
@@ -35,7 +36,7 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 10px;
+  gap: 14px;
 }
 
 .phase-label {
@@ -45,14 +46,108 @@ body {
   color: #6e6e68;
 }
 
-.countdown {
-  font-family: ui-monospace, 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
-  font-size: clamp(52px, 15vw, 116px);
-  letter-spacing: 1px;
-  line-height: 1;
-  font-weight: 500;
+/* flip clock */
+
+.flip-clock {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.flip-group {
+  display: flex;
+  gap: 3px;
+}
+
+.clock-colon {
+  width: 12px;
+  height: 62px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #3a3a36;
+  font-weight: 600;
+  font-size: 28px;
+}
+
+.flip-card {
+  position: relative;
+  width: 42px;
+  height: 62px;
+  border-radius: 4px;
+  background: #26261f;
+  overflow: hidden;
+  perspective: 220px;
+}
+
+.flip-card-digit,
+.flip-flap-digit {
+  font-family: 'Archivo', Helvetica, Arial, sans-serif;
+  font-weight: 600;
+  font-size: 34px;
+  letter-spacing: -1px;
   color: #5be08a;
   font-variant-numeric: tabular-nums;
+}
+
+.flip-card-digit {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.flip-card-crease {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 1px;
+  background: #1c1c1a;
+  z-index: 3;
+}
+
+.flip-flap {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 50%;
+  overflow: hidden;
+  background: #26261f;
+  border-radius: 4px 4px 0 0;
+  transform-origin: bottom;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  z-index: 2;
+  animation: flip-down 0.3s ease-in forwards;
+}
+
+.flip-flap-digit {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 62px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@keyframes flip-down {
+  from {
+    transform: rotateX(0deg);
+  }
+  to {
+    transform: rotateX(-90deg);
+  }
+}
+
+/* progress */
+
+.progress-block {
+  padding: 0 0 8px;
 }
 
 .progress {
@@ -65,6 +160,14 @@ body {
   height: 100%;
   background: #e8552d;
   border-radius: 0;
+}
+
+.progress-meta {
+  padding: 6px 16px 0;
+  text-align: right;
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  color: #6e6e68;
 }
 
 .filler {

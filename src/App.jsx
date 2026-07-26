@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import FlipClock from './FlipClock.jsx'
 
 const WAKE_KEY = 'awake-clock:wake'
 const BED_KEY = 'awake-clock:bed'
@@ -16,12 +17,12 @@ function nowToSec(date) {
   return date.getHours() * 3600 + date.getMinutes() * 60 + date.getSeconds()
 }
 
-function formatHMS(totalSec) {
+function formatDigits(totalSec) {
   const h = Math.floor(totalSec / 3600)
   const m = Math.floor((totalSec % 3600) / 60)
   const s = Math.floor(totalSec % 60)
   const pad = (n) => String(n).padStart(2, '0')
-  return `${pad(h)}:${pad(m)}:${pad(s)}`
+  return `${pad(h)}${pad(m)}${pad(s)}`
 }
 
 export default function App() {
@@ -69,18 +70,23 @@ export default function App() {
     }
   }
 
+  const clampedPercent = Math.min(100, Math.max(0, percent))
+  const remainingPercent = Math.round(100 - clampedPercent)
+
   return (
     <div className="app">
       <div className="hero">
         <div className="phase-label">{label}</div>
-        <div className="countdown">{formatHMS(remaining)}</div>
+        <FlipClock hms={formatDigits(remaining)} />
       </div>
 
-      <div className="progress">
-        <div
-          className="progress-fill"
-          style={{ width: `${Math.min(100, Math.max(0, percent))}%` }}
-        />
+      <div className="progress-block">
+        <div className="progress">
+          <div className="progress-fill" style={{ width: `${clampedPercent}%` }} />
+        </div>
+        <div className="progress-meta">
+          <span>{remainingPercent}% 남음</span>
+        </div>
       </div>
 
       <div className="filler" />
