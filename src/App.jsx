@@ -61,29 +61,18 @@ export default function App() {
   const phaseElapsed = isAwake ? relNow : relNow - awakeDur
   const percent = phaseTotal > 0 ? (phaseElapsed / phaseTotal) * 100 : 0
 
+  const openPicker = (e) => {
+    try {
+      e.target.showPicker?.()
+    } catch {
+      /* unsupported browser — focus alone still opens the native picker on most */
+    }
+  }
+
   return (
     <div className="app">
-      <div className="inputs">
-        <label className="input-row">
-          <span>기상</span>
-          <input
-            type="time"
-            value={wakeTime}
-            onChange={(e) => setWakeTime(e.target.value)}
-          />
-        </label>
-        <label className="input-row">
-          <span>취침</span>
-          <input
-            type="time"
-            value={bedTime}
-            onChange={(e) => setBedTime(e.target.value)}
-          />
-        </label>
-      </div>
-
-      <div className="display">
-        <div className="label">{label}</div>
+      <div className="hero">
+        <div className="phase-label">{label}</div>
         <div className="countdown">{formatHMS(remaining)}</div>
       </div>
 
@@ -92,6 +81,33 @@ export default function App() {
           className="progress-fill"
           style={{ width: `${Math.min(100, Math.max(0, percent))}%` }}
         />
+      </div>
+
+      <div className="filler" />
+
+      <div className="controls">
+        <div className="pill">
+          <input
+            type="time"
+            className="pill-input"
+            value={wakeTime}
+            onChange={(e) => setWakeTime(e.target.value)}
+            onClick={openPicker}
+            aria-label="기상 시간"
+          />
+          <span className="pill-label">{wakeTime} 기상</span>
+        </div>
+        <div className="pill">
+          <input
+            type="time"
+            className="pill-input"
+            value={bedTime}
+            onChange={(e) => setBedTime(e.target.value)}
+            onClick={openPicker}
+            aria-label="취침 시간"
+          />
+          <span className="pill-label">{bedTime} 취침</span>
+        </div>
       </div>
     </div>
   )
