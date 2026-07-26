@@ -1,4 +1,4 @@
-const CACHE_NAME = "awake-clock-v2";
+const CACHE_NAME = "awake-clock-v3";
 
 self.addEventListener("install", () => {
   self.skipWaiting();
@@ -18,7 +18,7 @@ self.addEventListener("activate", (event) => {
 self.addEventListener("fetch", (event) => {
   if (event.request.mode === "navigate") {
     event.respondWith(
-      fetch(event.request)
+      fetch(event.request, { cache: "no-store" })
         .then((response) => {
           const copy = response.clone();
           caches.open(CACHE_NAME).then((cache) => cache.put(event.request, copy));
